@@ -1,0 +1,6 @@
+-incdir sv
+sv/reflection.sv
+
+-incdir test
+test/some_package.sv
+test/test.sv
