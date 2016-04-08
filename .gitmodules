@@ -1,3 +1,6 @@
 [submodule "dependencies/vpi"]
 	path = dependencies/vpi
 	url = https://github.com/tudortimi/vpi.git
+[submodule "dependencies/svunit"]
+	path = dependencies/svunit
+	url = https://github.com/tudortimi/svunit.git
