@@ -14,6 +14,9 @@
 
 
 package some_package;
+  timeunit 1ns;
+  timeprecision 1ps;
+
   `include "some_class.svh"
   `include "some_other_class.svh"
 endpackage

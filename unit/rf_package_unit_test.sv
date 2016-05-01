@@ -48,6 +48,14 @@ module rf_package_unit_test;
       `FAIL_UNLESS_STR_EQUAL(rfp.get_name(), "some_package")
     `SVTEST_END
 
+    `SVTEST(get_time_unit__returns_time_unit)
+      `FAIL_UNLESS_EQUAL(rfp.get_time_unit(), -9)
+    `SVTEST_END
+
+    `SVTEST(get_time_precision__returns_time_precision)
+      `FAIL_UNLESS_EQUAL(rfp.get_time_precision(), -12)
+    `SVTEST_END
+
     `SVTEST(get_variables__returns_2_entries)
       rf_class classes[] = rfp.get_classes();
       `FAIL_UNLESS(classes.size() == 2)

@@ -15,6 +15,8 @@
 
 class rf_package;
   extern function string get_name();
+  extern function int get_time_unit();
+  extern function int get_time_precision();
   extern function array_of_rf_class get_classes();
   extern function rf_class get_class_by_name(string name);
 
@@ -36,6 +38,16 @@ endclass
 
 function string rf_package::get_name();
   return vpi_get_str(vpiName, package_);
+endfunction
+
+
+function int rf_package::get_time_unit();
+  return vpi_get(vpiTimeUnit, package_);
+endfunction
+
+
+function int rf_package::get_time_precision();
+  return vpi_get(vpiTimePrecision, package_);
 endfunction
 
 
@@ -74,6 +86,8 @@ endfunction
 function void rf_package::print(int unsigned indent = 0);
   rf_class classes[] = get_classes();
   $display({indent{" "}}, "Package '%s'", get_name());
+  $display({indent{" "}}, "  time unit = '%0d'", get_time_unit());
+  $display({indent{" "}}, "  time precision = '%0d'", get_time_precision());
   foreach (classes[i])
     classes[i].print(indent + 2);
 endfunction
