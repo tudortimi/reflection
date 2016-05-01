@@ -27,8 +27,9 @@ module rf_class_unit_test;
 
 
   function void build();
+    automatic rf_package p = rf_manager::get_package_by_name("some_package");
     svunit_ut = new(name);
-    rfc = rf_manager::get_class_by_name("some_class");
+    rfc = p.get_class_by_name("some_class");
   endfunction
 
 

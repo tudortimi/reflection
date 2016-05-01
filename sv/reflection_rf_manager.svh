@@ -14,31 +14,21 @@
 
 
 class rf_manager;
-  extern static function rf_class get_class_by_name(string name);
+  extern static function rf_package get_package_by_name(string name);
 endclass
 
 
-function rf_class rf_manager::get_class_by_name(string name);
+function rf_package rf_manager::get_package_by_name(string name);
   vpiHandle package_it = vpi_iterate(vpiPackage, null);
 
   while (1) begin
     vpiHandle package_ = vpi_scan(package_it);
-    vpiHandle classdefn_it;
-
     if (package_ == null)
       break;
-    classdefn_it = vpi_iterate(vpiClassDefn, package_);
-    if (classdefn_it == null)
-      continue;
 
-    while (1) begin
-      vpiHandle classdefn = vpi_scan(classdefn_it);
-      if (classdefn == null)
-        break;
-      if (vpi_get_str(vpiName, classdefn) == name) begin
-        rf_class c = new(classdefn);
-        return c;
-      end
+    if (vpi_get_str(vpiName, package_) == name) begin
+      rf_package p = new(package_);
+      return p;
     end
   end
 endfunction

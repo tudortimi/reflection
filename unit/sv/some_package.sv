@@ -15,4 +15,5 @@
 
 package some_package;
   `include "some_class.svh"
+  `include "some_other_class.svh"
 endpackage

@@ -29,7 +29,8 @@ module rf_variable_unit_test;
 
 
   function void build();
-    automatic rf_class c = rf_manager::get_class_by_name("some_class");
+    automatic rf_package p = rf_manager::get_package_by_name("some_package");
+    automatic rf_class c = p.get_class_by_name("some_class");
     svunit_ut = new(name);
     sv = c.get_variable_by_name("some_variable");
     srv = c.get_variable_by_name("some_rand_variable");

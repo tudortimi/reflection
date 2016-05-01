@@ -18,8 +18,10 @@ module test;
   import some_package::*;
 
   initial begin
-    automatic rf_class rf_some_class =
-      rf_manager::get_class_by_name("some_class");
+    automatic rf_package rf_some_package = rf_manager::get_package_by_name(
+      "some_package");
+    automatic rf_class rf_some_class = rf_some_package.get_class_by_name(
+      "some_class");
     automatic rf_variable rf_some_field = rf_some_class.get_variable_by_name(
       "some_field");
     automatic rf_variable rf_some_rand_field = rf_some_class.get_variable_by_name(
@@ -33,5 +35,7 @@ module test;
 
     rf_some_class.print();
     $display("");
+
+    rf_some_package.print();
   end
 endmodule

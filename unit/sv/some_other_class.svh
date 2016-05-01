@@ -13,10 +13,5 @@
 // limitations under the License.
 
 
-typedef enum { NOT_RAND, RAND, RANDC } rand_type_e;
-
-typedef class rf_class;
-typedef rf_class array_of_rf_class[];
-
-typedef class rf_variable;
-typedef rf_variable array_of_rf_variable[];
+class some_other_class extends some_class;
+endclass

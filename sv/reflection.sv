@@ -20,5 +20,6 @@ package reflection;
 
   `include "reflection_rf_variable.svh"
   `include "reflection_rf_class.svh"
+  `include "reflection_rf_package.svh"
   `include "reflection_rf_manager.svh"
 endpackage
