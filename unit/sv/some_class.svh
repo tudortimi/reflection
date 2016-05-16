@@ -17,4 +17,6 @@ class some_class;
   int some_variable;
   rand int some_rand_variable;
   randc int some_randc_variable;
+
+  int some_int_var;
 endclass

@@ -27,6 +27,11 @@ module rf_variable_unit_test;
   rf_variable srv;
   rf_variable srcv;
 
+  rf_variable siv;
+
+  // TODO Currently, only variables declared in modules are tested/supported.
+  some_class c;
+
 
   function void build();
     automatic rf_package p = rf_manager::get_package_by_name("some_package");
@@ -35,11 +40,13 @@ module rf_variable_unit_test;
     sv = c.get_variable_by_name("some_variable");
     srv = c.get_variable_by_name("some_rand_variable");
     srcv = c.get_variable_by_name("some_randc_variable");
+    siv = c.get_variable_by_name("some_int_var");
   endfunction
 
 
   task setup();
     svunit_ut.setup();
+    c = new();
   endtask
 
 
@@ -67,6 +74,19 @@ module rf_variable_unit_test;
       `FAIL_UNLESS(sv.get_rand_type() == NOT_RAND)
       `FAIL_UNLESS(srv.get_rand_type() == RAND)
       `FAIL_UNLESS(srcv.get_rand_type() == RANDC)
+    `SVTEST_END
+
+    `SVTEST(get__int__returns_value)
+      rf_value #(int) v;
+      c.some_int_var = 5;
+      `FAIL_UNLESS($cast(v, siv.get(rf_object_instance #(some_class)::get(c))))
+      `FAIL_UNLESS(v.get() == 5)
+    `SVTEST_END
+
+    `SVTEST(set__int__modifies_value)
+      rf_value #(int) v = new(5);
+      siv.set(rf_object_instance #(some_class)::get(c), v);
+      `FAIL_UNLESS(c.some_int_var == 5)
     `SVTEST_END
 
   `SVUNIT_TESTS_END

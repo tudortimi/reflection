@@ -18,6 +18,8 @@ package reflection;
 
   `include "reflection_types.svh"
 
+  `include "reflection_rf_value.svh"
+  `include "reflection_rf_object_instance.svh"
   `include "reflection_rf_variable.svh"
   `include "reflection_rf_class.svh"
   `include "reflection_rf_package.svh"

@@ -13,9 +13,23 @@
 // limitations under the License.
 
 
-package some_package;
-  timeunit 1ns;
-  timeprecision 1fs;
+virtual class rf_value_base;
+endclass
 
-  `include "some_class.svh"
-endpackage
+
+class rf_value #(type T = int) extends rf_value_base;
+  local T value;
+  local static T def_value;
+
+  function new(T value = def_value);
+    this.value = value;
+  endfunction
+
+  function T get();
+    return value;
+  endfunction
+
+  function void set(T value);
+    this.value = value;
+  endfunction
+endclass

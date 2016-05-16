@@ -8,5 +8,6 @@ irun \
   -incdir ../sv \
   ../sv/reflection.sv \
   \
-  some_package.sv \
+  -incdir sv \
+  sv/some_package.sv \
   test.sv

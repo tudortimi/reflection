@@ -49,9 +49,9 @@ module rf_class_unit_test;
       `FAIL_UNLESS_STR_EQUAL(rfc.get_name(), "some_class")
     `SVTEST_END
 
-    `SVTEST(get_variables__returns_3_entries)
+    `SVTEST(get_variables__returns_4_entries)
       rf_variable vars[] = rfc.get_variables();
-      `FAIL_UNLESS(vars.size() == 3)
+      `FAIL_UNLESS(vars.size() == 4)
     `SVTEST_END
 
     `SVTEST(get_variable_by_name__nonexistent__returns_null)
