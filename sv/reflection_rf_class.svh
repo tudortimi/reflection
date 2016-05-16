@@ -42,14 +42,15 @@ endfunction
 function array_of_rf_variable rf_class::get_variables();
   rf_variable vars[$];
   vpiHandle variables_it = vpi_iterate(vpiVariables, classDefn);
-  while (1) begin
-    rf_variable v;
-    vpiHandle variable = vpi_scan(variables_it);
-    if (variable == null)
-      break;
-    v = new(variable);
-    vars.push_back(v);
-  end
+  if (variables_it != null)
+    while (1) begin
+      rf_variable v;
+      vpiHandle variable = vpi_scan(variables_it);
+      if (variable == null)
+        break;
+      v = new(variable);
+      vars.push_back(v);
+    end
   return vars;
 endfunction
 
