@@ -61,6 +61,10 @@ module rf_variable_unit_test;
       `FAIL_UNLESS_STR_EQUAL(sv.get_name(), "some_variable")
     `SVTEST_END
 
+    `SVTEST(get_type__int__returns_type)
+      `FAIL_UNLESS_STR_EQUAL(siv.get_type(), "int")
+    `SVTEST_END
+
     `SVTEST(is_rand__not_rand__returns_0)
       `FAIL_IF(sv.is_rand())
     `SVTEST_END

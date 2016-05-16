@@ -15,6 +15,7 @@
 
 class rf_variable;
   extern function string get_name();
+  extern function string get_type();
   extern function bit is_rand();
   extern function rand_type_e get_rand_type();
 
@@ -70,9 +71,26 @@ function string rf_variable::get_name();
   return vpi_get_str(vpiName, variable);
 endfunction
 
+
+function string rf_variable::get_type();
+  vpiHandle typespec = vpi_handle(vpiTypespec, variable);
+
+  if (vpi_get_str(vpiName, typespec) != "")
+    return vpi_get_str(vpiName, typespec);
+
+  case (vpi_get(vpiType, typespec))
+    vpiIntTypespec : return "int";
+  endcase
+
+  $fatal(0, "Type of '%s' not supported", get_name());
+  return "";
+endfunction
+
+
 function bit rf_variable::is_rand();
   return get_rand_type() != NOT_RAND;
 endfunction
+
 
 function rand_type_e rf_variable::get_rand_type();
   PLI_INT32 rand_type = vpi_get(vpiRandType, variable);
@@ -84,6 +102,7 @@ function rand_type_e rf_variable::get_rand_type();
   endcase
 endfunction
 
+
 function rf_value_base rf_variable::get(rf_object_instance_base object);
   vpiHandle var_ = get_var(object);
   case (vpi_get_str(vpiType, var_))
@@ -92,6 +111,7 @@ function rf_value_base rf_variable::get(rf_object_instance_base object);
       var_));
   endcase
 endfunction
+
 
 function void rf_variable::set(rf_object_instance_base object, rf_value_base value);
   vpiHandle var_ = get_var(object);
