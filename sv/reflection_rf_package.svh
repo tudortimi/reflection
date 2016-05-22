@@ -17,6 +17,7 @@ class rf_package;
   extern function string get_name();
   extern function int get_time_unit();
   extern function int get_time_precision();
+
   extern function array_of_rf_class get_classes();
   extern function rf_class get_class_by_name(string name);
 

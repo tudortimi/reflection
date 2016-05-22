@@ -13,19 +13,21 @@
 // limitations under the License.
 
 
-module rf_manager_unit_test;
+module rf_module_unit_test;
   import svunit_pkg::svunit_testcase;
   `include "svunit_defines.svh"
 
-  string name = "rf_manager_ut";
+  string name = "rf_module_ut";
   svunit_testcase svunit_ut;
 
   import reflection::*;
-  import some_package::*;
+
+  rf_module rfm;
 
 
   function void build();
     svunit_ut = new(name);
+    rfm = rf_manager::get_module_by_name("rf_module_unit_test__some_module");
   endfunction
 
 
@@ -41,28 +43,24 @@ module rf_manager_unit_test;
 
   `SVUNIT_TESTS_BEGIN
 
-    `SVTEST(get_package_by_name__nonexistent__returns_null)
-      rf_package p = rf_manager::get_package_by_name(
-        "some_nonexistent_package");
-      `FAIL_UNLESS(p == null)
-    `SVTEST_END
-
-    `SVTEST(get_package_by_name__existent__returns_handle)
-      rf_package p = rf_manager::get_package_by_name("some_package");
-      `FAIL_IF(p == null)
+    `SVTEST(get_name__returns_name)
+      `FAIL_UNLESS_STR_EQUAL(rfm.get_name(), "rf_module_unit_test__some_module")
     `SVTEST_END
 
 
-    `SVTEST(get_module_by_name__nonexistent__returns_null)
-      rf_module p = rf_manager::get_module_by_name(
-        "some_nonexistent_module");
-      `FAIL_UNLESS(p == null)
+    `SVTEST(get_classes__returns_2_entries)
+      rf_class classes[] = rfm.get_classes();
+      `FAIL_UNLESS(classes.size() == 2)
     `SVTEST_END
 
-    `SVTEST(get_module_by_name__existent__returns_handle)
-      rf_module p = rf_manager::get_module_by_name(
-        "rf_manager_unit_test__some_module");
-      `FAIL_IF(p == null)
+    `SVTEST(get_class_by_name__nonexistent__returns_null)
+      rf_class c = rfm.get_class_by_name("some_nonexistent_class");
+      `FAIL_UNLESS(c == null)
+    `SVTEST_END
+
+    `SVTEST(get_class_by_name__existent__returns_handle)
+      rf_class c = rfm.get_class_by_name("some_class");
+      `FAIL_IF(c == null)
     `SVTEST_END
 
   `SVUNIT_TESTS_END
@@ -71,5 +69,10 @@ endmodule
 
 
 
-module rf_manager_unit_test__some_module();
+module rf_module_unit_test__some_module();
+  class some_class;
+  endclass
+
+  class some_other_class;
+  endclass
 endmodule

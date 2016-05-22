@@ -27,5 +27,6 @@ package reflection;
   `include "reflection_rf_function.svh"
   `include "reflection_rf_class.svh"
   `include "reflection_rf_package.svh"
+  `include "reflection_rf_module.svh"
   `include "reflection_rf_manager.svh"
 endpackage
