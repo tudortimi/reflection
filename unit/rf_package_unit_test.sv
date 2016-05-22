@@ -13,6 +13,19 @@
 // limitations under the License.
 
 
+package rf_package_unit_test__some_package;
+  timeunit 1ns;
+  timeprecision 1ps;
+
+  class some_class;
+  endclass
+
+  class some_other_class;
+  endclass
+endpackage
+
+
+
 module rf_package_unit_test;
   import svunit_pkg::svunit_testcase;
   `include "svunit_defines.svh"
@@ -21,14 +34,14 @@ module rf_package_unit_test;
   svunit_testcase svunit_ut;
 
   import reflection::*;
-  import some_package::*;
+  import rf_package_unit_test__some_package::*;
 
   rf_package rfp;
 
 
   function void build();
     svunit_ut = new(name);
-    rfp = rf_manager::get_package_by_name("some_package");
+    rfp = rf_manager::get_package_by_name("rf_package_unit_test__some_package");
   endfunction
 
 
@@ -45,7 +58,8 @@ module rf_package_unit_test;
   `SVUNIT_TESTS_BEGIN
 
     `SVTEST(get_name__returns_name)
-      `FAIL_UNLESS_STR_EQUAL(rfp.get_name(), "some_package")
+      `FAIL_UNLESS_STR_EQUAL(rfp.get_name(),
+        "rf_package_unit_test__some_package")
     `SVTEST_END
 
     `SVTEST(get_time_unit__returns_time_unit)

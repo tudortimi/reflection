@@ -1,4 +1,4 @@
-// Copyright 2016 Tudor Timisescu (verificationgentleman.com)
+  // Copyright 2016 Tudor Timisescu (verificationgentleman.com)
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -13,6 +13,14 @@
 // limitations under the License.
 
 
+module rf_manager_unit_test__some_module();
+endmodule
+
+package rf_manager_unit_test__some_package;
+endpackage
+
+
+
 module rf_manager_unit_test;
   import svunit_pkg::svunit_testcase;
   `include "svunit_defines.svh"
@@ -21,7 +29,7 @@ module rf_manager_unit_test;
   svunit_testcase svunit_ut;
 
   import reflection::*;
-  import some_package::*;
+  import rf_manager_unit_test__some_package::*;
 
 
   function void build();
@@ -48,7 +56,8 @@ module rf_manager_unit_test;
     `SVTEST_END
 
     `SVTEST(get_package_by_name__existent__returns_handle)
-      rf_package p = rf_manager::get_package_by_name("some_package");
+      rf_package p = rf_manager::get_package_by_name(
+        "rf_manager_unit_test__some_package");
       `FAIL_IF(p == null)
     `SVTEST_END
 
@@ -67,9 +76,4 @@ module rf_manager_unit_test;
 
   `SVUNIT_TESTS_END
 
-endmodule
-
-
-
-module rf_manager_unit_test__some_module();
 endmodule

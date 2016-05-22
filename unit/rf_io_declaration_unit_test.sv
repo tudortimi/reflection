@@ -21,19 +21,20 @@ module rf_io_declaration_unit_test;
   svunit_testcase svunit_ut;
 
   import reflection::*;
-  import some_package::*;
 
   rf_io_declaration ia;
   rf_io_declaration oa;
   rf_io_declaration ioa;
 
   // TODO Currently, only objects declared in modules are tested/supported.
+  typedef class some_class;
   some_class c = new();
 
 
   function void build();
-    automatic rf_package p = rf_manager::get_package_by_name("some_package");
-    automatic rf_class c = p.get_class_by_name("some_class");
+    automatic rf_module m = rf_manager::get_module_by_name(
+      "rf_io_declaration_unit_test");
+    automatic rf_class c = m.get_class_by_name("some_class");
     automatic rf_method sfwa = c.get_method_by_name("some_function_with_args");
     svunit_ut = new(name);
     ia = sfwa.get_io_declaration_by_name("input_arg");
@@ -76,4 +77,10 @@ module rf_io_declaration_unit_test;
 
   `SVUNIT_TESTS_END
 
+
+  class some_class;
+    function void some_function_with_args(input int input_arg,
+      output int output_arg, inout int inout_arg);
+    endfunction
+  endclass
 endmodule

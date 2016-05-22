@@ -21,23 +21,27 @@ module rf_variable_unit_test;
   svunit_testcase svunit_ut;
 
   import reflection::*;
-  import some_package::*;
 
   rf_variable sv;
+
+  rf_variable snrv;
   rf_variable srv;
   rf_variable srcv;
 
   rf_variable siv;
 
   // TODO Currently, only variables declared in modules are tested/supported.
+  typedef class some_class;
   some_class c;
 
 
   function void build();
-    automatic rf_package p = rf_manager::get_package_by_name("some_package");
-    automatic rf_class c = p.get_class_by_name("some_class");
+    automatic rf_module m = rf_manager::get_module_by_name(
+      "rf_variable_unit_test");
+    automatic rf_class c = m.get_class_by_name("some_class");
     svunit_ut = new(name);
     sv = c.get_variable_by_name("some_variable");
+    snrv = c.get_variable_by_name("some_not_rand_variable");
     srv = c.get_variable_by_name("some_rand_variable");
     srcv = c.get_variable_by_name("some_randc_variable");
     siv = c.get_variable_by_name("some_int_var");
@@ -66,7 +70,7 @@ module rf_variable_unit_test;
     `SVTEST_END
 
     `SVTEST(is_rand__not_rand__returns_0)
-      `FAIL_IF(sv.is_rand())
+      `FAIL_IF(snrv.is_rand())
     `SVTEST_END
 
     `SVTEST(is_rand__rand__returns_1)
@@ -75,7 +79,7 @@ module rf_variable_unit_test;
     `SVTEST_END
 
     `SVTEST(get_rand_type__returns_type)
-      `FAIL_UNLESS(sv.get_rand_type() == NOT_RAND)
+      `FAIL_UNLESS(snrv.get_rand_type() == NOT_RAND)
       `FAIL_UNLESS(srv.get_rand_type() == RAND)
       `FAIL_UNLESS(srcv.get_rand_type() == RANDC)
     `SVTEST_END
@@ -95,4 +99,14 @@ module rf_variable_unit_test;
 
   `SVUNIT_TESTS_END
 
+
+  class some_class;
+    bit some_variable;
+
+    int some_not_rand_variable;
+    rand int some_rand_variable;
+    randc int some_randc_variable;
+
+    int some_int_var;
+  endclass
 endmodule

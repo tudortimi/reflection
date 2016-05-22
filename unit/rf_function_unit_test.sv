@@ -21,18 +21,19 @@ module rf_function_unit_test;
   svunit_testcase svunit_ut;
 
   import reflection::*;
-  import some_package::*;
 
   rf_function svf;
   rf_function sif;
 
   // TODO Currently, only objects declared in modules are tested/supported.
+  typedef class some_class;
   some_class c = new();
 
 
   function void build();
-    automatic rf_package p = rf_manager::get_package_by_name("some_package");
-    automatic rf_class c = p.get_class_by_name("some_class");
+    automatic rf_module m = rf_manager::get_module_by_name(
+      "rf_function_unit_test");
+    automatic rf_class c = m.get_class_by_name("some_class");
     svunit_ut = new(name);
     svf = c.get_function_by_name("some_void_function");
     sif = c.get_function_by_name("some_int_function");
@@ -61,4 +62,12 @@ module rf_function_unit_test;
 
   `SVUNIT_TESTS_END
 
+
+  class some_class;
+    function void some_void_function();
+    endfunction
+
+    function int some_int_function();
+    endfunction
+  endclass
 endmodule

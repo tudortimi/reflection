@@ -5,9 +5,6 @@
 -incdir ../../sv
 ../../sv/*.sv
 
--incdir ../sv
-../sv/*.sv
-
 
 -nowarn SPDUSD
 -nowarn DSEMEL:DSEM2009

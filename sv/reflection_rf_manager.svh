@@ -16,6 +16,35 @@
 class rf_manager;
   extern static function rf_package get_package_by_name(string name);
   extern static function rf_module get_module_by_name(string name);
+
+
+  //----------------------------------------------------------------------------
+  // Internal
+  //----------------------------------------------------------------------------
+
+  local static function rf_module search_module(vpiHandle module_, string name);
+    vpiHandle module_it = vpi_iterate(vpiModule, module_);
+    vpiHandle modules[$];
+
+    if (module_it != null)
+      while (1) begin
+        vpiHandle module_ = vpi_scan(module_it);
+        if (module_ == null)
+          break;
+
+        modules.push_back(module_);
+        if (vpi_get_str(vpiDefName, module_) == name) begin
+          rf_module m = new(module_);
+          return m;
+        end
+      end
+
+    foreach (modules[i]) begin
+      rf_module m = search_module(modules[i], name);
+      if (m != null)
+        return m;
+    end
+  endfunction
 endclass
 
 
@@ -37,16 +66,5 @@ endfunction
 
 
 function rf_module rf_manager::get_module_by_name(string name);
-  vpiHandle module_it = vpi_iterate(vpiModule, null);
-
-  while (1) begin
-    vpiHandle module_ = vpi_scan(module_it);
-    if (module_ == null)
-      break;
-
-    if (vpi_get_str(vpiName, module_) == name) begin
-      rf_module m = new(module_);
-      return m;
-    end
-  end
+  return search_module(null, name);
 endfunction

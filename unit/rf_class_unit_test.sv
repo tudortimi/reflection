@@ -21,15 +21,15 @@ module rf_class_unit_test;
   svunit_testcase svunit_ut;
 
   import reflection::*;
-  import some_package::*;
 
   rf_class rfc;
 
 
   function void build();
-    automatic rf_package p = rf_manager::get_package_by_name("some_package");
+    automatic rf_module m = rf_manager::get_module_by_name(
+      "rf_class_unit_test");
     svunit_ut = new(name);
-    rfc = p.get_class_by_name("some_class");
+    rfc = m.get_class_by_name("some_class");
   endfunction
 
 
@@ -50,9 +50,9 @@ module rf_class_unit_test;
     `SVTEST_END
 
 
-    `SVTEST(get_variables__returns_4_entries)
+    `SVTEST(get_variables__returns_2_entries)
       rf_variable vars[] = rfc.get_variables();
-      `FAIL_UNLESS(vars.size() == 4)
+      `FAIL_UNLESS(vars.size() == 2)
     `SVTEST_END
 
     `SVTEST(get_variable_by_name__nonexistent__returns_null)
@@ -87,9 +87,9 @@ module rf_class_unit_test;
     `SVTEST_END
 
 
-    `SVTEST(get_tasks__returns_1_entry)
+    `SVTEST(get_tasks__returns_2_entries)
       rf_task tasks[] = rfc.get_tasks();
-      `FAIL_UNLESS(tasks.size() == 1)
+      `FAIL_UNLESS(tasks.size() == 2)
     `SVTEST_END
 
     `SVTEST(get_task_by_name__existent_task__returns_handle)
@@ -98,9 +98,9 @@ module rf_class_unit_test;
     `SVTEST_END
 
 
-    `SVTEST(get_functions__returns_4_entries)
+    `SVTEST(get_functions__returns_3_entries)
       rf_function functions[] = rfc.get_functions();
-      `FAIL_UNLESS(functions.size() == 4)
+      `FAIL_UNLESS(functions.size() == 3)
     `SVTEST_END
 
     `SVTEST(get_function_by_name__existent_function__returns_handle)
@@ -110,4 +110,24 @@ module rf_class_unit_test;
 
   `SVUNIT_TESTS_END
 
+
+  class some_class;
+    int some_variable;
+    int some_other_variable;
+
+    task some_task();
+    endtask
+
+    task some_other_task();
+    endtask
+
+    function void some_function();
+    endfunction
+
+    function void some_other_function();
+    endfunction
+
+    function void yet_another_function();
+    endfunction
+  endclass
 endmodule
