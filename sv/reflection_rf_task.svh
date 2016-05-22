@@ -13,25 +13,8 @@
 // limitations under the License.
 
 
-typedef enum { NOT_RAND, RAND, RANDC } rand_type_e;
-typedef enum { INPUT, OUTPUT, INOUT } io_direction_e;
-typedef enum { TASK, FUNCTION } method_kind_e;
-
-
-typedef class rf_class;
-typedef rf_class array_of_rf_class[];
-
-typedef class rf_variable;
-typedef rf_variable array_of_rf_variable[];
-
-typedef class rf_io_declaration;
-typedef rf_io_declaration array_of_rf_io_declaration[];
-
-typedef class rf_method;
-typedef rf_method array_of_rf_method[];
-
-typedef class rf_task;
-typedef rf_task array_of_rf_task[];
-
-typedef class rf_function;
-typedef rf_function array_of_rf_function[];
+class rf_task extends rf_method;
+  function new(vpiHandle method);
+    super.new(method);
+  endfunction
+endclass

@@ -19,4 +19,20 @@ class some_class;
   randc int some_randc_variable;
 
   int some_int_var;
+
+  task some_task();
+  endtask
+
+  function void some_function();
+  endfunction
+
+  function void some_function_with_args(input int input_arg,
+    output int output_arg, inout int inout_arg);
+  endfunction
+
+  function void some_void_function();
+  endfunction
+
+  function int some_int_function();
+  endfunction
 endclass

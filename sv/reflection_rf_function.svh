@@ -13,25 +13,26 @@
 // limitations under the License.
 
 
-typedef enum { NOT_RAND, RAND, RANDC } rand_type_e;
-typedef enum { INPUT, OUTPUT, INOUT } io_direction_e;
-typedef enum { TASK, FUNCTION } method_kind_e;
+class rf_function extends rf_method;
+  extern function string get_return_type();
 
 
-typedef class rf_class;
-typedef rf_class array_of_rf_class[];
+  //----------------------------------------------------------------------------
+  // Internal
+  //----------------------------------------------------------------------------
 
-typedef class rf_variable;
-typedef rf_variable array_of_rf_variable[];
+  function new(vpiHandle method);
+    super.new(method);
+  endfunction
+endclass
 
-typedef class rf_io_declaration;
-typedef rf_io_declaration array_of_rf_io_declaration[];
 
-typedef class rf_method;
-typedef rf_method array_of_rf_method[];
 
-typedef class rf_task;
-typedef rf_task array_of_rf_task[];
-
-typedef class rf_function;
-typedef rf_function array_of_rf_function[];
+function string rf_function::get_return_type();
+  vpiHandle r = vpi_handle(vpiReturn, method);
+  rf_variable v;
+  if (r == null)
+    return "void";
+  v = new(r);
+  return v.get_type();
+endfunction

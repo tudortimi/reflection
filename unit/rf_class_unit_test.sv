@@ -49,6 +49,7 @@ module rf_class_unit_test;
       `FAIL_UNLESS_STR_EQUAL(rfc.get_name(), "some_class")
     `SVTEST_END
 
+
     `SVTEST(get_variables__returns_4_entries)
       rf_variable vars[] = rfc.get_variables();
       `FAIL_UNLESS(vars.size() == 4)
@@ -62,6 +63,49 @@ module rf_class_unit_test;
     `SVTEST(get_variable_by_name__existent__returns_handle)
       rf_variable v = rfc.get_variable_by_name("some_variable");
       `FAIL_IF(v == null)
+    `SVTEST_END
+
+
+    `SVTEST(get_methods__returns_5_entries)
+      rf_method methods[] = rfc.get_methods();
+      `FAIL_UNLESS(methods.size() == 5)
+    `SVTEST_END
+
+    `SVTEST(get_method_by_name__nonexistent__returns_null)
+      rf_method m = rfc.get_method_by_name("some_nonexistent_method");
+      `FAIL_UNLESS(m == null)
+    `SVTEST_END
+
+    `SVTEST(get_method_by_name__existent_task__returns_handle)
+      rf_method m = rfc.get_method_by_name("some_task");
+      `FAIL_IF(m == null)
+    `SVTEST_END
+
+    `SVTEST(get_method_by_name__existent_function__returns_handle)
+      rf_method m = rfc.get_method_by_name("some_function");
+      `FAIL_IF(m == null)
+    `SVTEST_END
+
+
+    `SVTEST(get_tasks__returns_1_entry)
+      rf_task tasks[] = rfc.get_tasks();
+      `FAIL_UNLESS(tasks.size() == 1)
+    `SVTEST_END
+
+    `SVTEST(get_task_by_name__existent_task__returns_handle)
+      rf_task t = rfc.get_task_by_name("some_task");
+      `FAIL_IF(t == null)
+    `SVTEST_END
+
+
+    `SVTEST(get_functions__returns_4_entries)
+      rf_function functions[] = rfc.get_functions();
+      `FAIL_UNLESS(functions.size() == 4)
+    `SVTEST_END
+
+    `SVTEST(get_function_by_name__existent_function__returns_handle)
+      rf_function f = rfc.get_function_by_name("some_function");
+      `FAIL_IF(f == null)
     `SVTEST_END
 
   `SVUNIT_TESTS_END
