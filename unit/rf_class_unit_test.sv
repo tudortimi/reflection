@@ -23,6 +23,7 @@ module rf_class_unit_test;
   import reflection::*;
 
   rf_class rfc;
+  rf_class rfoc;
 
 
   function void build();
@@ -30,6 +31,7 @@ module rf_class_unit_test;
       "rf_class_unit_test");
     svunit_ut = new(name);
     rfc = m.get_class_by_name("some_class");
+    rfoc = m.get_class_by_name("some_other_class");
   endfunction
 
 
@@ -108,6 +110,35 @@ module rf_class_unit_test;
       `FAIL_IF(f == null)
     `SVTEST_END
 
+
+    `SVTEST(get_base_class__root_class__returns_null)
+      `FAIL_UNLESS(rfc.get_base_class() == null)
+    `SVTEST_END
+
+    `SVTEST(get_base_class__derived_class__returns_handle)
+      rf_class bc = rfoc.get_base_class();
+      `FAIL_IF(bc == null)
+      `FAIL_UNLESS_STR_EQUAL(bc.get_name(), "some_class")
+    `SVTEST_END
+
+
+    // Not implemented in VPI layer yet
+
+    //`SVTEST(get_derived_classes__leaf_class__returns_empty_array)
+    //  rf_class dcs[] = rfoc.get_subclasses();
+    //  `FAIL_UNLESS(dcs.size() == 0)
+    //`SVTEST_END
+    //
+    //`SVTEST(get_derived_classes__class_with_subclasses__returns_empty_array)
+    //  rf_class dcs[] = rfc.get_subclasses();
+    //  rf_class find_res[$];
+    //  `FAIL_UNLESS(dcs.size() == 2)
+    //  find_res = dcs.find() with ( item.get_name() == "some_other_class" );
+    //  `FAIL_UNLESS(find_res.size() == 1);
+    //  find_res = dcs.find() with ( item.get_name() == "yet_another_class" );
+    //  `FAIL_UNLESS(find_res.size() == 1);
+    //`SVTEST_END
+
   `SVUNIT_TESTS_END
 
 
@@ -129,5 +160,12 @@ module rf_class_unit_test;
 
     function void yet_another_function();
     endfunction
+  endclass
+
+
+  class some_other_class extends some_class;
+  endclass
+
+  class yet_another_class extends some_class;
   endclass
 endmodule

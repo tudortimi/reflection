@@ -28,6 +28,9 @@ class rf_class;
   extern function array_of_rf_function get_functions();
   extern function rf_function get_function_by_name(string name);
 
+  extern function rf_class get_base_class();
+  //extern function array_of_rf_class get_subclasses();
+
   extern function void print(int unsigned indent = 0);
 
 
@@ -174,6 +177,24 @@ function rf_function rf_class::get_function_by_name(string name);
     return f;
   end
 endfunction
+
+
+function rf_class rf_class::get_base_class();
+  vpiHandle e = vpi_handle(vpiExtends, classDefn);
+  rf_class bc;
+  if (e == null)
+    return null;
+  bc = new(vpi_handle(vpiClassDefn, vpi_handle(vpiClassTypespec, e)));
+  return bc;
+endfunction
+
+
+//function array_of_rf_class rf_class::get_subclasses();
+//  rf_class subclasses[$];
+//  vpiHandle dc_iter = vpi_iterate(vpiDerivedClasses, classDefn);
+//  if (dc_iter == null)
+//    return '{};
+//endfunction
 
 
 function void rf_class::print(int unsigned indent = 0);
