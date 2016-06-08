@@ -35,3 +35,5 @@ typedef rf_task array_of_rf_task[];
 
 typedef class rf_function;
 typedef rf_function array_of_rf_function[];
+
+typedef class cache;

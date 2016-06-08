@@ -61,17 +61,33 @@ module rf_manager_unit_test;
       `FAIL_IF(p == null)
     `SVTEST_END
 
+    `SVTEST(get_package_by_name__returns_same_handle)
+      rf_package p1 = rf_manager::get_package_by_name(
+        "rf_manager_unit_test__some_package");
+      rf_package p2 = rf_manager::get_package_by_name(
+        "rf_manager_unit_test__some_package");
+      `FAIL_IF(p1 != p2)
+    `SVTEST_END
+
 
     `SVTEST(get_module_by_name__nonexistent__returns_null)
-      rf_module p = rf_manager::get_module_by_name(
+      rf_module m = rf_manager::get_module_by_name(
         "some_nonexistent_module");
-      `FAIL_UNLESS(p == null)
+      `FAIL_UNLESS(m == null)
     `SVTEST_END
 
     `SVTEST(get_module_by_name__existent__returns_handle)
-      rf_module p = rf_manager::get_module_by_name(
+      rf_module m = rf_manager::get_module_by_name(
         "rf_manager_unit_test__some_module");
-      `FAIL_IF(p == null)
+      `FAIL_IF(m == null)
+    `SVTEST_END
+
+    `SVTEST(get_module_by_name__returns_same_handle)
+      rf_module m1 = rf_manager::get_module_by_name(
+        "rf_manager_unit_test__some_module");
+      rf_module m2 = rf_manager::get_module_by_name(
+        "rf_manager_unit_test__some_module");
+      `FAIL_IF(m1 != m2)
     `SVTEST_END
 
   `SVUNIT_TESTS_END

@@ -34,8 +34,8 @@ class rf_manager;
 
         modules.push_back(module_);
         if (vpi_get_str(vpiDefName, module_) == name) begin
-          rf_module m = new(module_);
-          return m;
+          cache c = cache::get();
+          return c.modules.get_val(module_);
         end
       end
 
@@ -58,8 +58,8 @@ function rf_package rf_manager::get_package_by_name(string name);
       break;
 
     if (vpi_get_str(vpiName, package_) == name) begin
-      rf_package p = new(package_);
-      return p;
+      cache c = cache::get();
+      return c.packages.get_val(package_);
     end
   end
 endfunction

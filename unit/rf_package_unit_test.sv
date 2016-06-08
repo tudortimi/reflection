@@ -85,6 +85,13 @@ module rf_package_unit_test;
       `FAIL_IF(c == null)
     `SVTEST_END
 
+
+    `SVTEST(get_class_by_name__returns_same_handle)
+      rf_class c1 = rfp.get_class_by_name("some_class");
+      rf_class c2 = rfp.get_class_by_name("some_class");
+      `FAIL_IF(c1 != c2)
+    `SVTEST_END
+
   `SVUNIT_TESTS_END
 
 endmodule
