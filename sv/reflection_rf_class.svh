@@ -1,4 +1,4 @@
-// Copyright 2016 Tudor Timisescu (verificationgentleman.com)
+// Copyright 2016-2018 Tudor Timisescu (verificationgentleman.com)
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,6 +15,9 @@
 
 class rf_class;
   extern function string get_name();
+
+  // XXX Not supported in IUS
+  //extern function array_of_rf_attribute get_attributes();
 
   extern function array_of_rf_variable get_variables();
   extern function rf_variable get_variable_by_name(string name);
@@ -67,6 +70,12 @@ endclass
 function string rf_class::get_name();
   return vpi_get_str(vpiName, classDefn);
 endfunction
+
+
+//function array_of_rf_attribute rf_class::get_attributes();
+//  rf_attribute attrs[$];
+//  vpiHandle variables_it = vpi_iterate(vpiAttribute, classDefn);
+//endfunction
 
 
 function array_of_rf_variable rf_class::get_variables();

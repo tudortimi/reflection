@@ -1,4 +1,4 @@
-// Copyright 2016 Tudor Timisescu (verificationgentleman.com)
+// Copyright 2016-2018 Tudor Timisescu (verificationgentleman.com)
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ package reflection;
 
   `include "reflection_types.svh"
 
+  `include "reflection_rf_attribute.svh"
   `include "reflection_rf_value.svh"
   `include "reflection_rf_object_instance.svh"
   `include "reflection_rf_variable.svh"

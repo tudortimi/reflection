@@ -1,4 +1,4 @@
-// Copyright 2016 Tudor Timisescu (verificationgentleman.com)
+// Copyright 2016-2018 Tudor Timisescu (verificationgentleman.com)
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,6 +17,8 @@ typedef enum { NOT_RAND, RAND, RANDC } rand_type_e;
 typedef enum { INPUT, OUTPUT, INOUT } io_direction_e;
 typedef enum { TASK, FUNCTION } method_kind_e;
 
+typedef class rf_attribute;
+typedef rf_attribute array_of_rf_attribute[];
 
 typedef class rf_class;
 typedef rf_class array_of_rf_class[];

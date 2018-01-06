@@ -1,4 +1,4 @@
-// Copyright 2016 Tudor Timisescu (verificationgentleman.com)
+// Copyright 2016-2018 Tudor Timisescu (verificationgentleman.com)
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -50,6 +50,12 @@ module rf_class_unit_test;
     `SVTEST(get_name__returns_name)
       `FAIL_UNLESS_STR_EQUAL(rfc.get_name(), "some_class")
     `SVTEST_END
+
+
+    //`SVTEST(get_attributes__returns_2_entries)
+    //  rf_attribute attributes[] = rfc.get_attributes();
+    //  `FAIL_UNLESS(attributes.size() == 2)
+    //`SVTEST_END
 
 
     `SVTEST(get_variables__returns_2_entries)
@@ -142,6 +148,8 @@ module rf_class_unit_test;
   `SVUNIT_TESTS_END
 
 
+  (* attr1 *)
+  (* attr2 *)
   class some_class;
     int some_variable;
     int some_other_variable;
