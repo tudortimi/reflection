@@ -23,6 +23,8 @@ module rf_variable_unit_test;
   import reflection::*;
 
   rf_variable sv;
+  rf_variable ssv;
+  rf_variable scv;
 
   rf_variable snrv;
   rf_variable srv;
@@ -44,6 +46,8 @@ module rf_variable_unit_test;
     automatic rf_class c = m.get_class_by_name("some_class");
     svunit_ut = new(name);
     sv = c.get_variable_by_name("some_variable");
+    ssv = c.get_variable_by_name("some_static_variable");
+    scv = c.get_variable_by_name("some_const_variable");
     snrv = c.get_variable_by_name("some_not_rand_variable");
     srv = c.get_variable_by_name("some_rand_variable");
     srcv = c.get_variable_by_name("some_randc_variable");
@@ -73,6 +77,18 @@ module rf_variable_unit_test;
 
     `SVTEST(get_type__int__returns_type)
       `FAIL_UNLESS_STR_EQUAL(siv.get_type(), "int")
+    `SVTEST_END
+
+
+    `SVTEST(is_static__returns_correct)
+      `FAIL_IF(sv.is_static())
+      `FAIL_UNLESS(ssv.is_static())
+    `SVTEST_END
+
+
+    `SVTEST(is_const__returns_correct)
+      `FAIL_IF(sv.is_const())
+      `FAIL_UNLESS(scv.is_const())
     `SVTEST_END
 
 
@@ -128,6 +144,8 @@ module rf_variable_unit_test;
   class some_class;
 
     bit some_variable;
+    static bit some_static_variable;
+    const bit some_const_variable;
 
     int some_not_rand_variable;
     rand int some_rand_variable;

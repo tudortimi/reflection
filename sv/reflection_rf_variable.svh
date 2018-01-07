@@ -21,8 +21,17 @@ class rf_variable;
 
   extern function string get_name();
   extern function string get_type();
+
+
+  // TODO Move to 'rf_class_variable' class
+
+  extern function bit is_static();
+
+  extern function bit is_const();
+
   extern function bit is_rand();
   extern function rand_type_e get_rand_type();
+
 
   extern function array_of_rf_attribute get_attributes();
 
@@ -115,6 +124,16 @@ function string rf_variable::get_type();
 endfunction
 
 
+function bit rf_variable::is_static();
+  return vpi_get(vpiAutomatic, variable) == 0;
+endfunction
+
+
+function bit rf_variable::is_const();
+  return vpi_get(vpiConstantVariable, variable);
+endfunction
+
+
 function bit rf_variable::is_rand();
   return get_rand_type() != NOT_RAND;
 endfunction
@@ -150,7 +169,14 @@ endfunction
 function rf_value_base rf_variable::get(rf_object_instance_base object = null);
   vpiHandle var_;
 
-  if (object )
+  if (object == null && !is_static()) begin
+`ifdef INCA
+    $stacktrace;
+`endif
+    $fatal(0, "'null' instance passed for dynamic variable");
+  end
+
+  if (object != null)
     var_ = get_var(object);
   else
     var_ = get_static_var();
