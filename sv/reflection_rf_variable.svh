@@ -13,6 +13,10 @@
 // limitations under the License.
 
 
+typedef class variable_introspection;
+
+
+
 class rf_variable;
 
   extern function string get_name();
@@ -22,7 +26,15 @@ class rf_variable;
 
   extern function array_of_rf_attribute get_attributes();
 
-  extern function rf_value_base get(rf_object_instance_base object);
+  /**
+   * Gets the value of this variable in the supplied object instance. If the instance is null,
+   * the variable must static.
+   */
+  extern function rf_value_base get(rf_object_instance_base object = null);
+
+  /**
+   * Sets the value of this variable in the supplied object instance to the given value.
+   */
   extern function void set(rf_object_instance_base object, rf_value_base value);
 
   extern function void print(int unsigned indent = 0);
@@ -32,7 +44,14 @@ class rf_variable;
   // Internal
   //----------------------------------------------------------------------------
 
-  protected vpiHandle variable;
+  local const vpiHandle variable;
+  local const vpiHandle parent;
+
+
+  function new(vpiHandle variable, vpiHandle parent = null);
+    this.variable = variable;
+    this.parent = parent;
+  endfunction
 
 
   local function vpiHandle get_var(rf_object_instance_base object);
@@ -50,11 +69,21 @@ class rf_variable;
   endfunction
 
 
+  // TODO Split class variables into own class
+  local function vpiHandle get_static_var();
+    rf_class c = new(parent);
+    variable_introspection var_intro = new(c.get_typespec());
+    rf_variable var_ = var_intro.get_by_name(this.get_name());
+    return var_.variable;
+  endfunction
+
+
   local function rf_value_base get_value_int(vpiHandle var_);
     rf_value #(int) ret = new();
     ret.set(vpi_get_value_int(var_));
     return ret;
   endfunction
+
 
   local function void set_value_int(vpiHandle var_, rf_value_base value);
     rf_value #(int) val;
@@ -63,10 +92,6 @@ class rf_variable;
     vpi_put_value_int(var_, val.get());
   endfunction
 
-
-  function new(vpiHandle variable);
-    this.variable = variable;
-  endfunction
 endclass
 
 
@@ -122,8 +147,14 @@ function array_of_rf_attribute rf_variable::get_attributes();
 endfunction
 
 
-function rf_value_base rf_variable::get(rf_object_instance_base object);
-  vpiHandle var_ = get_var(object);
+function rf_value_base rf_variable::get(rf_object_instance_base object = null);
+  vpiHandle var_;
+
+  if (object )
+    var_ = get_var(object);
+  else
+    var_ = get_static_var();
+
   case (vpi_get_str(vpiType, var_))
     "vpiIntVar" : return get_value_int(var_);
     default : $fatal(0, "Type '%s' not implemented", vpi_get_str(vpiType,

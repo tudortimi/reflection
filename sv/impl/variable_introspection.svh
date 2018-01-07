@@ -35,7 +35,7 @@ class variable_introspection;
         vpiHandle variable = vpi_scan(variables_it);
         if (variable == null)
           break;
-        v = new(variable);
+        v = new(variable, element);
         vars.push_back(v);
       end
     return vars;
@@ -50,7 +50,7 @@ class variable_introspection;
         if (variable == null)
           break;
         if (vpi_get_str(vpiName, variable) == name) begin
-          rf_variable v = new(variable);
+          rf_variable v = new(variable, element);
           return v;
         end
       end

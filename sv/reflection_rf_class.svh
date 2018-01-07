@@ -55,6 +55,13 @@ class rf_class extends rf_base;
   endfunction
 
 
+  // TODO Only works for non-parameterized classes
+  /* package */function vpiHandle get_typespec();
+    vpiHandle typespec_it = vpi_iterate(vpiClassTypespec, classDefn);
+    return vpi_scan(typespec_it);
+  endfunction
+
+
   local function rf_method create_method(vpiHandle method);
     case (vpi_get(vpiType, method))
       vpiTask : begin
