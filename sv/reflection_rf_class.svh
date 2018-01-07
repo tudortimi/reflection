@@ -16,6 +16,7 @@
 class rf_class extends rf_base;
 
   extern function string get_name();
+  extern function bit is_abstract();
 
   // XXX Not supported in IUS
   //extern function array_of_rf_attribute get_attributes();
@@ -71,6 +72,11 @@ endclass
 
 function string rf_class::get_name();
   return vpi_get_str(vpiName, classDefn);
+endfunction
+
+
+function bit rf_class::is_abstract();
+  return vpi_get(vpiVirtual, classDefn);
 endfunction
 
 

@@ -24,6 +24,7 @@ module rf_class_unit_test;
 
   rf_class rfc;
   rf_class rfoc;
+  rf_class some_abstract_class_refl;
 
 
   function void build();
@@ -32,6 +33,7 @@ module rf_class_unit_test;
     svunit_ut = new(name);
     rfc = m.get_class_by_name("some_class");
     rfoc = m.get_class_by_name("some_other_class");
+    some_abstract_class_refl = m.get_class_by_name("some_abstract_class");
   endfunction
 
 
@@ -49,6 +51,12 @@ module rf_class_unit_test;
 
     `SVTEST(get_name__returns_name)
       `FAIL_UNLESS_STR_EQUAL(rfc.get_name(), "some_class")
+    `SVTEST_END
+
+
+    `SVTEST(is_abstract)
+      `FAIL_IF(rfc.is_abstract())
+      `FAIL_UNLESS(some_abstract_class_refl.is_abstract())
     `SVTEST_END
 
 
@@ -176,4 +184,8 @@ module rf_class_unit_test;
 
   class yet_another_class extends some_class;
   endclass
+
+  virtual class some_abstract_class;
+  endclass
+
 endmodule
