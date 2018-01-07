@@ -22,7 +22,10 @@ package reflection;
   `include "reflection_rf_attribute.svh"
   `include "reflection_rf_value.svh"
   `include "reflection_rf_object_instance.svh"
+
   `include "reflection_rf_variable.svh"
+  `include "impl/variable_introspection.svh"
+
   `include "reflection_rf_io_declaration.svh"
   `include "reflection_rf_method.svh"
   `include "reflection_rf_task.svh"

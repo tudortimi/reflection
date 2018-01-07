@@ -1,4 +1,4 @@
-// Copyright 2016 Tudor Timisescu (verificationgentleman.com)
+// Copyright 2016-2018 Tudor Timisescu (verificationgentleman.com)
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -30,7 +30,9 @@ module rf_variable_unit_test;
 
   rf_variable siv;
 
-  // TODO Currently, only variables declared in modules are tested/supported.
+  rf_variable some_var_with_attrs;
+
+  // TODO Currently, only variables declared in classes are tested/supported.
   typedef class some_class;
   some_class c;
 
@@ -45,6 +47,7 @@ module rf_variable_unit_test;
     srv = c.get_variable_by_name("some_rand_variable");
     srcv = c.get_variable_by_name("some_randc_variable");
     siv = c.get_variable_by_name("some_int_var");
+    some_var_with_attrs = c.get_variable_by_name("some_var_with_attrs");
   endfunction
 
 
@@ -65,24 +68,35 @@ module rf_variable_unit_test;
       `FAIL_UNLESS_STR_EQUAL(sv.get_name(), "some_variable")
     `SVTEST_END
 
+
     `SVTEST(get_type__int__returns_type)
       `FAIL_UNLESS_STR_EQUAL(siv.get_type(), "int")
     `SVTEST_END
 
+
     `SVTEST(is_rand__not_rand__returns_0)
       `FAIL_IF(snrv.is_rand())
     `SVTEST_END
+
 
     `SVTEST(is_rand__rand__returns_1)
       `FAIL_UNLESS(srv.is_rand())
       `FAIL_UNLESS(srcv.is_rand())
     `SVTEST_END
 
+
     `SVTEST(get_rand_type__returns_type)
       `FAIL_UNLESS(snrv.get_rand_type() == NOT_RAND)
       `FAIL_UNLESS(srv.get_rand_type() == RAND)
       `FAIL_UNLESS(srcv.get_rand_type() == RANDC)
     `SVTEST_END
+
+
+    `SVTEST(get_attributes__returns_2_entries)
+      rf_attribute attrs[] = some_var_with_attrs.get_attributes();
+      `FAIL_UNLESS(attrs.size() == 2)
+    `SVTEST_END
+
 
     `SVTEST(get__int__returns_value)
       rf_value #(int) v;
@@ -101,6 +115,7 @@ module rf_variable_unit_test;
 
 
   class some_class;
+
     bit some_variable;
 
     int some_not_rand_variable;
@@ -108,5 +123,11 @@ module rf_variable_unit_test;
     randc int some_randc_variable;
 
     int some_int_var;
+
+    (* attr0 *)
+    (* attr1 *)
+    bit some_var_with_attrs;
+
   endclass
+
 endmodule

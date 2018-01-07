@@ -1,4 +1,4 @@
-// Copyright 2016 Tudor Timisescu (verificationgentleman.com)
+// Copyright 2016-2018 Tudor Timisescu (verificationgentleman.com)
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,6 +14,7 @@
 
 
 class rf_attribute;
+
   extern function string get_name();
 
   extern function void print(int unsigned indent = 0);
@@ -25,9 +26,10 @@ class rf_attribute;
 
   protected vpiHandle attribute;
 
-  function new(vpiHandle attribute_);
+  function new(vpiHandle attribute);
     this.attribute = attribute;
   endfunction
+
 endclass
 
 

@@ -1,4 +1,4 @@
-// Copyright 2016 Tudor Timisescu (verificationgentleman.com)
+// Copyright 2016-2018 Tudor Timisescu (verificationgentleman.com)
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,10 +14,13 @@
 
 
 class rf_variable;
+
   extern function string get_name();
   extern function string get_type();
   extern function bit is_rand();
   extern function rand_type_e get_rand_type();
+
+  extern function array_of_rf_attribute get_attributes();
 
   extern function rf_value_base get(rf_object_instance_base object);
   extern function void set(rf_object_instance_base object, rf_value_base value);
@@ -100,6 +103,22 @@ function rand_type_e rf_variable::get_rand_type();
     vpiRandC : return RANDC;
     default : $fatal(0, "Internal error");
   endcase
+endfunction
+
+
+function array_of_rf_attribute rf_variable::get_attributes();
+  rf_attribute attrs[$];
+  vpiHandle attrs_it = vpi_iterate(vpiAttribute, variable);
+  if (attrs_it != null)
+    forever begin
+      rf_attribute v;
+      vpiHandle attr = vpi_scan(attrs_it);
+      if (attr == null)
+        break;
+      v = new(attr);
+      attrs.push_back(v);
+    end
+  return attrs;
 endfunction
 
 

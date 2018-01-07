@@ -19,6 +19,9 @@ class rf_module;
   extern function array_of_rf_class get_classes();
   extern function rf_class get_class_by_name(string name);
 
+  extern function array_of_rf_variable get_variables();
+  extern function rf_variable get_variable_by_name(string name);
+
   extern function void print(int unsigned indent = 0);
 
 
@@ -26,11 +29,17 @@ class rf_module;
   // Internal
   //----------------------------------------------------------------------------
 
-  protected vpiHandle module_;
+  protected const vpiHandle module_;
+
+  local const variable_introspection var_intro;
+
 
   function new(vpiHandle module_);
     this.module_ = module_;
+
+    var_intro = new(module_);
   endfunction
+
 endclass
 
 
@@ -71,6 +80,16 @@ function rf_class rf_module::get_class_by_name(string name);
         return v;
       end
     end
+endfunction
+
+
+function array_of_rf_variable rf_module::get_variables();
+  return var_intro.get_all();
+endfunction
+
+
+function rf_variable rf_module::get_variable_by_name(string name);
+  return var_intro.get_by_name(name);
 endfunction
 
 

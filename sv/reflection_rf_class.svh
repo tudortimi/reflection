@@ -44,10 +44,14 @@ class rf_class extends rf_base;
   // Internal
   //----------------------------------------------------------------------------
 
-  protected vpiHandle classDefn;
+  protected const vpiHandle classDefn;
+
+  local const variable_introspection var_intro;
 
   function new(vpiHandle classDefn);
     this.classDefn = classDefn;
+
+    var_intro = new(classDefn);
   endfunction
 
 
@@ -87,32 +91,12 @@ endfunction
 
 
 function array_of_rf_variable rf_class::get_variables();
-  rf_variable vars[$];
-  vpiHandle variables_it = vpi_iterate(vpiVariables, classDefn);
-  if (variables_it != null)
-    while (1) begin
-      rf_variable v;
-      vpiHandle variable = vpi_scan(variables_it);
-      if (variable == null)
-        break;
-      v = new(variable);
-      vars.push_back(v);
-    end
-  return vars;
+  return var_intro.get_all();
 endfunction
 
 
 function rf_variable rf_class::get_variable_by_name(string name);
-  vpiHandle variables_it = vpi_iterate(vpiVariables, classDefn);
-  while (1) begin
-    vpiHandle variable = vpi_scan(variables_it);
-    if (variable == null)
-      break;
-    if (vpi_get_str(vpiName, variable) == name) begin
-      rf_variable v = new(variable);
-      return v;
-    end
-  end
+  return var_intro.get_by_name(name);
 endfunction
 
 
