@@ -17,6 +17,7 @@ package reflection;
   import vpi::*;
 
   `include "reflection_types.svh"
+  `include "reflection_rf_base.svh"
 
   `include "reflection_rf_attribute.svh"
   `include "reflection_rf_value.svh"

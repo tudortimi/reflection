@@ -13,7 +13,8 @@
 // limitations under the License.
 
 
-class rf_class;
+class rf_class extends rf_base;
+
   extern function string get_name();
 
   // XXX Not supported in IUS
@@ -34,6 +35,7 @@ class rf_class;
   extern function rf_class get_base_class();
   //extern function array_of_rf_class get_subclasses();
 
+  extern virtual function bit equals(rf_base other);
   extern function void print(int unsigned indent = 0);
 
 
@@ -204,6 +206,14 @@ endfunction
 //  if (dc_iter == null)
 //    return '{};
 //endfunction
+
+
+function bit rf_class::equals(rf_base other);
+  rf_class other_as_class;
+  if (!$cast(other_as_class, other))
+    return 0;
+  return classDefn == other_as_class.classDefn;
+endfunction
 
 
 function void rf_class::print(int unsigned indent = 0);
