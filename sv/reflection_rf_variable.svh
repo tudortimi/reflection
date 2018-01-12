@@ -63,6 +63,16 @@ class rf_variable;
   endfunction
 
 
+  local function bit are_attributes_supported();
+    case (vpi_get(vpiType, variable))
+      vpiStringVar:
+        return 0;
+    endcase
+
+    return 1;
+  endfunction
+
+
   local function vpiHandle get_var(rf_object_instance_base object);
     vpiHandle class_obj = object.get_class_obj();
     vpiHandle var_it = vpi_iterate(vpiVariables, class_obj);
@@ -152,7 +162,16 @@ endfunction
 
 function array_of_rf_attribute rf_variable::get_attributes();
   rf_attribute attrs[$];
-  vpiHandle attrs_it = vpi_iterate(vpiAttribute, variable);
+  vpiHandle attrs_it;
+
+  if (!are_attributes_supported()) begin
+    $warning(
+        "This tool doesn't support attributes variables of type '%s'",
+        vpi_get_str(vpiType, variable));
+    return attrs;
+  end
+
+  attrs_it = vpi_iterate(vpiAttribute, variable);
   if (attrs_it != null)
     forever begin
       rf_attribute v;
