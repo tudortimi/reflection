@@ -12,6 +12,6 @@ gradle-app.setting
 .gradletasknamecache
 
 *.log
-*.history
-INCA_libs
+
+# Temporary directory for SVunit runs
 unit/tmp
