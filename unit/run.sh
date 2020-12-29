@@ -29,5 +29,4 @@ runSVUnit \
     -s ius \
     -o tmp \
     -f ../build/full_args.f \
-    -f reflection.f \
     $t_arg
