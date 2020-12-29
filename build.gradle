@@ -3,3 +3,11 @@ plugins {
 }
 
 group 'com.verificationgentleman'
+
+sourceSets {
+    main {
+        sv {
+            srcDirs = ['sv']
+        }
+    }
+}
