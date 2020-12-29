@@ -1,0 +1,35 @@
+plugins {
+    id 'com.verificationgentleman.gradle.hdvl.systemverilog' version '0.1.0-SNAPSHOT'
+}
+
+group 'com.verificationgentleman'
+
+sourceSets {
+    main {
+        sv {
+            srcDirs = ['sv']
+        }
+    }
+}
+
+dependencies {
+    compile('com.verificationgentleman:vpi') {
+        version {
+            branch = 'master'
+        }
+    }
+}
+
+extensions.xrunDir = file("$buildDir/xrun")
+
+task test(type: Exec) {
+    dependsOn genFullArgsFile
+    executable 'xrun'
+    args'-f', genFullArgsFile.destination.get().asFile
+    args '-incdir', file('test/sv')
+    args file('test/sv/some_package.sv')
+    args file('test/test.sv')
+    args '-access', 'rwc'
+    workingDir xrunDir
+    mkdir workingDir
+}

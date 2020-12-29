@@ -23,9 +23,10 @@ while true ; do
     esac
 done
 
+../gradlew --project-dir .. genFullArgsFile
 
 runSVUnit \
     -s ius \
     -o tmp \
-    -f reflection.f \
+    -f ../build/full_args.f \
     $t_arg
