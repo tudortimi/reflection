@@ -3,3 +3,9 @@ pluginManagement {
         mavenLocal()
     }
 }
+
+sourceControl {
+    gitRepository("https://github.com/tudortimi/vpi.git") {
+        producesModule("com.verificationgentleman:vpi")
+    }
+}

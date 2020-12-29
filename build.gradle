@@ -11,3 +11,11 @@ sourceSets {
         }
     }
 }
+
+dependencies {
+    compile('com.verificationgentleman:vpi') {
+        version {
+            branch = 'master'
+        }
+    }
+}
