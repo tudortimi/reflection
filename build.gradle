@@ -46,7 +46,7 @@ dependencies {
     }
 }
 
-task dummyTask(type: DefaultTask) {
+task printSvunitDir(type: DefaultTask) {
     dependsOn configurations.dummy
     doFirst {
         println configurations.dummy.singleFile
