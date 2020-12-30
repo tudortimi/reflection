@@ -18,15 +18,7 @@ class SvunitBuildPlugin implements Plugin<Settings> {
                     from buildFile
                     into buildDir
                 }
-                configurations {
-                    'default' {
-                        canBeConsumed = true
-                        canBeResolved = false
-                        attributes {
-                            attribute(Attribute.of(String), 'cloneSvunit')
-                        }
-                    }
-                }
+                configurations.create('default')
                 artifacts {
                     'default'(buildDir) {
                         builtBy(dummyCopy)

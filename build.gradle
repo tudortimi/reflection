@@ -35,13 +35,7 @@ task test(type: Exec) {
 }
 
 configurations {
-    dummy {
-        canBeResolved = true
-        canBeConsumed = false
-        attributes {
-            attribute(Attribute.of(String), 'cloneSvunit')
-        }
-    }
+    dummy
 }
 
 dependencies {
