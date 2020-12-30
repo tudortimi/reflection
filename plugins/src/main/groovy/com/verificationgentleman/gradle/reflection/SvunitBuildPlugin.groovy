@@ -13,15 +13,10 @@ class SvunitBuildPlugin implements Plugin<Settings> {
             gradle.rootProject {
                 group = 'com.verificationgentleman'
 
-                task('dummyCopy', type: Copy) {
-                    from buildFile
-                    into buildDir
-                }
                 configurations.create('default')
+
                 artifacts {
-                    'default'(buildDir) {
-                        builtBy(dummyCopy)
-                    }
+                    'default'(projectDir)
                 }
             }
         }
