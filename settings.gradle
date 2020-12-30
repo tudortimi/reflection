@@ -4,8 +4,16 @@ pluginManagement {
     }
 }
 
+includeBuild('plugins')
+
 sourceControl {
     gitRepository("https://github.com/tudortimi/vpi.git") {
         producesModule("com.verificationgentleman:vpi")
+    }
+    gitRepository("https://github.com/tudortimi/svunit.git") {
+        producesModule("com.verificationgentleman:svunit")
+        plugins {
+            id "svunit-build"
+        }
     }
 }

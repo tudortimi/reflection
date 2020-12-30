@@ -33,3 +33,18 @@ task test(type: Exec) {
     workingDir xrunDir
     mkdir workingDir
 }
+
+configurations {
+    dummy
+}
+
+dependencies {
+    dummy('com.verificationgentleman:svunit:v3.34.2')
+}
+
+task writeSvunitDirPath(type: DefaultTask) {
+    dependsOn configurations.dummy
+    doLast {
+        file("$buildDir/svunit_dir_path.txt").text = configurations.dummy.singleFile
+    }
+}

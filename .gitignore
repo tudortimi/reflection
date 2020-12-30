@@ -15,3 +15,7 @@ gradle-app.setting
 
 # Temporary directory for SVunit runs
 unit/tmp
+
+# IntelliJ IDEA
+.idea
+*.iml
