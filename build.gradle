@@ -46,9 +46,9 @@ dependencies {
     }
 }
 
-task printSvunitDir(type: DefaultTask) {
+task writeSvunitDirPath(type: DefaultTask) {
     dependsOn configurations.dummy
-    doFirst {
-        println configurations.dummy.singleFile
+    doLast {
+        file("$buildDir/svunit_dir_path.txt").text = configurations.dummy.singleFile
     }
 }
