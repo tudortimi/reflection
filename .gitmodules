@@ -1,3 +1,0 @@
-[submodule "dependencies/svunit"]
-	path = dependencies/svunit
-	url = https://github.com/nosnhojn/svunit-code.git
