@@ -12,7 +12,6 @@ class SvunitBuildPlugin implements Plugin<Settings> {
             rootProject.name = 'svunit'
             gradle.rootProject {
                 group = 'com.verificationgentleman'
-                version = '1.0-SNAPSHOT'
 
                 task('dummyCopy', type: Copy) {
                     from buildFile
