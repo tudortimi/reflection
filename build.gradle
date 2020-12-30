@@ -33,3 +33,25 @@ task test(type: Exec) {
     workingDir xrunDir
     mkdir workingDir
 }
+
+configurations {
+    dummy {
+        canBeResolved = true
+        canBeConsumed = false
+        attributes {
+            attribute(Attribute.of(String), 'cloneSvunit')
+        }
+    }
+}
+
+dependencies {
+    dummy('com.verificationgentleman:svunit') {
+        version {
+            branch = 'master'
+        }
+    }
+}
+
+task dummyTask(type: DefaultTask) {
+    dependsOn configurations.dummy
+}

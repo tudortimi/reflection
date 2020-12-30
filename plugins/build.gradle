@@ -1,0 +1,13 @@
+plugins {
+    id 'groovy'
+    id 'java-gradle-plugin'
+}
+
+gradlePlugin {
+    plugins {
+        "svunit-build" {
+            id = "svunit-build"
+            implementationClass = "com.verificationgentleman.gradle.reflection.SvunitBuildPlugin"
+        }
+    }
+}
