@@ -39,11 +39,7 @@ configurations {
 }
 
 dependencies {
-    dummy('com.verificationgentleman:svunit') {
-        version {
-            branch = 'master'
-        }
-    }
+    dummy('com.verificationgentleman:svunit:v3.34.2')
 }
 
 task writeSvunitDirPath(type: DefaultTask) {
