@@ -4,16 +4,25 @@ pluginManagement {
     }
 }
 
-includeBuild('plugins')
-
 sourceControl {
     gitRepository("https://github.com/tudortimi/vpi.git") {
         producesModule("com.verificationgentleman:vpi")
     }
-    gitRepository("https://github.com/tudortimi/svunit.git") {
-        producesModule("com.verificationgentleman:svunit")
-        plugins {
-            id "svunit-build"
+}
+
+// XXX WORKAROUND Can't include builds if this project is included as build.
+// We only need 'plugins' because we want to inject the 'svunit-build' plugin
+// into the 'svunit' source dependency.
+boolean inComposite = gradle.parent != null
+if (!inComposite) {
+    includeBuild('plugins')
+
+    sourceControl {
+        gitRepository("https://github.com/tudortimi/svunit.git") {
+            producesModule("com.verificationgentleman:svunit")
+            plugins {
+                id "svunit-build"
+            }
         }
     }
 }
