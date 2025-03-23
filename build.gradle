@@ -1,5 +1,5 @@
 plugins {
-    id 'com.verificationgentleman.gradle.hdvl.systemverilog' version '0.1.0-SNAPSHOT'
+    id 'com.verificationgentleman.gradle.hdvl.systemverilog' version '0.2.7'
 }
 
 group 'com.verificationgentleman'
@@ -23,9 +23,9 @@ dependencies {
 extensions.xrunDir = file("$buildDir/xrun")
 
 task test(type: Exec) {
-    dependsOn genFullArgsFile
+    dependsOn genFullXrunArgsFile
     executable 'xrun'
-    args'-f', genFullArgsFile.destination.get().asFile
+    args'-f', genFullXrunArgsFile.destination.get().asFile
     args '-incdir', file('test/sv')
     args file('test/sv/some_package.sv')
     args file('test/test.sv')
