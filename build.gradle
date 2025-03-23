@@ -1,5 +1,5 @@
 plugins {
-    id 'com.verificationgentleman.gradle.hdvl.systemverilog' version '0.1.0-SNAPSHOT'
+    id 'com.verificationgentleman.gradle.hdvl.systemverilog' version '0.2.7'
 }
 
 group 'com.verificationgentleman'
