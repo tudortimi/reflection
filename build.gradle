@@ -23,9 +23,9 @@ dependencies {
 extensions.xrunDir = file("$buildDir/xrun")
 
 task test(type: Exec) {
-    dependsOn genFullArgsFile
+    dependsOn genFullXrunArgsFile
     executable 'xrun'
-    args'-f', genFullArgsFile.destination.get().asFile
+    args'-f', genFullXrunArgsFile.destination.get().asFile
     args '-incdir', file('test/sv')
     args file('test/sv/some_package.sv')
     args file('test/test.sv')
