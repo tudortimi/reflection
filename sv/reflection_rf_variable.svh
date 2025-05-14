@@ -111,6 +111,13 @@ class rf_variable;
     vpi_put_value_int(var_, val.get());
   endfunction
 
+
+  local function rf_value_base get_value_string(vpiHandle var_);
+    rf_value #(string) ret = new();
+    ret.set(vpi_get_value_string(var_));
+    return ret;
+  endfunction
+
 endclass
 
 
@@ -202,6 +209,7 @@ function rf_value_base rf_variable::get(rf_object_instance_base object = null);
 
   case (vpi_get_str(vpiType, var_))
     "vpiIntVar" : return get_value_int(var_);
+    "vpiStringVar" : return get_value_string(var_);
     default : $fatal(0, "Type '%s' not implemented", vpi_get_str(vpiType,
       var_));
   endcase

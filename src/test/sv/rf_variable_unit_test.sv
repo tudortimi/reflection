@@ -34,6 +34,7 @@ module rf_variable_unit_test;
 
   rf_variable some_var_with_attrs;
   rf_variable some_static_int_var;
+  rf_variable some_string_var;
 
   // TODO Currently, only variables declared in classes are tested/supported.
   typedef class some_class;
@@ -54,6 +55,7 @@ module rf_variable_unit_test;
     siv = c.get_variable_by_name("some_int_var");
     some_var_with_attrs = c.get_variable_by_name("some_var_with_attrs");
     some_static_int_var = c.get_variable_by_name("some_static_int_var");
+    some_string_var = c.get_variable_by_name("some_string_var");
   endfunction
 
 
@@ -139,6 +141,15 @@ module rf_variable_unit_test;
       `FAIL_UNLESS(val.get() == 5)
     `SVTEST_END
 
+
+    `SVTEST(get__string__returns_value)
+      rf_value #(string) val;
+      c.some_string_var = "a_string";
+
+      `FAIL_UNLESS($cast(val, some_string_var.get(rf_object_instance #(some_class)::get(c))))
+      `FAIL_UNLESS_STR_EQUAL(val.get(), "a_string")
+    `SVTEST_END
+
   `SVUNIT_TESTS_END
 
 
@@ -159,6 +170,7 @@ module rf_variable_unit_test;
     bit some_var_with_attrs;
 
     static int some_static_int_var;
+    string some_string_var;
 
   endclass
 
