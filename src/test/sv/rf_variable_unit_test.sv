@@ -123,6 +123,7 @@ module rf_variable_unit_test;
       `FAIL_UNLESS(v.get() == 5)
     `SVTEST_END
 
+
     `SVTEST(set__int__modifies_value)
       rf_value #(int) v = new(5);
       siv.set(rf_object_instance #(some_class)::get(c), v);
