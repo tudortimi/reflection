@@ -44,6 +44,10 @@ dependencies {
     dummy('org.svunit:svunit:v3.34.2')
 }
 
+toolChains.runSVUnit {
+    args "-f ${project.file('unit/svunit.f')}"
+}
+
 task writeSvunitDirPath(type: DefaultTask) {
     dependsOn configurations.dummy
     doLast {
