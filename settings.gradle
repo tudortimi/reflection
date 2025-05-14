@@ -13,7 +13,7 @@ if (!inComposite) {
 
     sourceControl {
         gitRepository("https://github.com/tudortimi/svunit.git") {
-            producesModule("com.verificationgentleman:svunit")
+            producesModule("org.svunit:svunit")
             plugins {
                 id "svunit-build"
             }

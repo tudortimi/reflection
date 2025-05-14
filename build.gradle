@@ -40,7 +40,8 @@ configurations {
 }
 
 dependencies {
-    dummy('com.verificationgentleman:svunit:v3.34.2')
+    testCompile('org.svunit:svunit:v3.34.2')
+    dummy('org.svunit:svunit:v3.34.2')
 }
 
 task writeSvunitDirPath(type: DefaultTask) {
