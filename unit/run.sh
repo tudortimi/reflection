@@ -23,7 +23,7 @@ while true ; do
     esac
 done
 
-../gradlew --project-dir .. writeSvunitDirPath genFullArgsFile
+../gradlew --project-dir .. writeSvunitDirPath genFullXrunArgsFile
 
 svunit_dir=$(head -n 1 ../build/svunit_dir_path.txt)
 echo "Using SVUnit from $svunit_dir"
@@ -34,5 +34,5 @@ cd - > /dev/null
 runSVUnit \
     -s ius \
     -o tmp \
-    -f ../build/full_args.f \
+    -f ../build/full_xrun_args.f \
     $t_arg
