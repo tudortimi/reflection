@@ -11,7 +11,7 @@ class SvunitBuildPlugin implements Plugin<Settings> {
         settings.with {
             rootProject.name = 'svunit'
             gradle.rootProject {
-                group = 'com.verificationgentleman'
+                group = 'org.svunit'
 
                 configurations.create('default')
 

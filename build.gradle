@@ -1,5 +1,6 @@
 plugins {
     id 'com.verificationgentleman.gradle.hdvl.systemverilog' version '0.2.7'
+    id 'com.verificationgentleman.gradle.hdvl.svunit' version '0.2.7'
 }
 
 group 'com.verificationgentleman'
@@ -34,17 +35,10 @@ task test(type: Exec) {
     mkdir workingDir
 }
 
-configurations {
-    dummy
-}
-
 dependencies {
-    dummy('com.verificationgentleman:svunit:v3.34.2')
+    testCompile('org.svunit:svunit:v3.34.2')
 }
 
-task writeSvunitDirPath(type: DefaultTask) {
-    dependsOn configurations.dummy
-    doLast {
-        file("$buildDir/svunit_dir_path.txt").text = configurations.dummy.singleFile
-    }
+toolChains.runSVUnit {
+    args "-f ${project.file('svunit.f')}"
 }
