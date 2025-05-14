@@ -19,3 +19,6 @@ unit/tmp
 # IntelliJ IDEA
 .idea
 *.iml
+.dvt/build.config.xml
+.dvt/default.ls
+.dvt/.build_config_dict/default
