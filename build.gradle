@@ -45,7 +45,7 @@ dependencies {
 }
 
 toolChains.runSVUnit {
-    args "-f ${project.file('unit/svunit.f')}"
+    args "-f ${project.file('svunit.f')}"
 }
 
 task writeSvunitDirPath(type: DefaultTask) {
