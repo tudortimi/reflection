@@ -150,6 +150,13 @@ module rf_variable_unit_test;
       `FAIL_UNLESS_STR_EQUAL(val.get(), "a_string")
     `SVTEST_END
 
+
+    `SVTEST(set__string__modifies_value)
+      rf_value #(string) v = new("another_string");
+      some_string_var.set(rf_object_instance #(some_class)::get(c), v);
+      `FAIL_UNLESS_STR_EQUAL(c.some_string_var, "another_string")
+    `SVTEST_END
+
   `SVUNIT_TESTS_END
 
 

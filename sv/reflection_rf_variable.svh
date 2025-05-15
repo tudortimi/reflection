@@ -118,6 +118,14 @@ class rf_variable;
     return ret;
   endfunction
 
+
+  local function void set_value_string(vpiHandle var_, rf_value_base value);
+    rf_value #(string) val;
+    if (!$cast(val, value))
+      $fatal(0, "Internal error");
+    vpi_put_value_string(var_, val.get());
+  endfunction
+
 endclass
 
 
@@ -220,6 +228,7 @@ function void rf_variable::set(rf_object_instance_base object, rf_value_base val
   vpiHandle var_ = get_var(object);
   case (vpi_get_str(vpiType, var_))
     "vpiIntVar" : set_value_int(var_, value);
+    "vpiStringVar" : set_value_string(var_, value);
     default : $fatal(0, "Type '%s' not implemented", vpi_get_str(vpiType,
       var_));
   endcase
