@@ -35,6 +35,7 @@ module rf_variable_unit_test;
   rf_variable some_var_with_attrs;
   rf_variable some_static_int_var;
   rf_variable some_string_var;
+  rf_variable some_string_array_handle;
 
   // TODO Currently, only variables declared in classes are tested/supported.
   typedef class some_class;
@@ -56,6 +57,7 @@ module rf_variable_unit_test;
     some_var_with_attrs = c.get_variable_by_name("some_var_with_attrs");
     some_static_int_var = c.get_variable_by_name("some_static_int_var");
     some_string_var = c.get_variable_by_name("some_string_var");
+    some_string_array_handle = c.get_variable_by_name("some_string_array_var");
   endfunction
 
 
@@ -68,6 +70,9 @@ module rf_variable_unit_test;
   task teardown();
     svunit_ut.teardown();
   endtask
+
+
+  typedef string string_arr[];
 
 
   `SVUNIT_TESTS_BEGIN
@@ -157,6 +162,17 @@ module rf_variable_unit_test;
       `FAIL_UNLESS_STR_EQUAL(c.some_string_var, "another_string")
     `SVTEST_END
 
+
+    `SVTEST(get__string_array__returns_value)
+      rf_value #(string_arr) val;
+      c.some_string_array_var = {"a_string", "another_string"};
+
+      `FAIL_UNLESS($cast(val, some_string_array_handle.get(rf_object_instance #(some_class)::get(c))))
+      `FAIL_UNLESS(val.get().size() == 2)
+      `FAIL_UNLESS_STR_EQUAL(val.get()[0], "a_string")
+      `FAIL_UNLESS_STR_EQUAL(val.get()[1], "another_string")
+    `SVTEST_END
+
   `SVUNIT_TESTS_END
 
 
@@ -178,6 +194,7 @@ module rf_variable_unit_test;
 
     static int some_static_int_var;
     string some_string_var;
+    string some_string_array_var[];
 
   endclass
 
