@@ -126,6 +126,25 @@ class rf_variable;
     vpi_put_value_string(var_, val.get());
   endfunction
 
+
+  local function rf_value_base get_value_string_array(vpiHandle var_);
+    typedef string string_arr[];
+    string the_array[];
+    rf_value #(string_arr) ret = new();
+
+    vpiHandle member_it = vpi_iterate(vpiReg, var_);
+    forever begin
+      vpiHandle member = vpi_scan(member_it);
+      if (member == null)
+        break;
+
+      the_array = {the_array, vpi_get_value_string(member)};
+    end
+
+    ret.set(the_array);
+    return ret;
+  endfunction
+
 endclass
 
 
@@ -218,6 +237,7 @@ function rf_value_base rf_variable::get(rf_object_instance_base object = null);
   case (vpi_get_str(vpiType, var_))
     "vpiIntVar" : return get_value_int(var_);
     "vpiStringVar" : return get_value_string(var_);
+    "vpiRegArray" : return get_value_string_array(var_);
     default : $fatal(0, "Type '%s' not implemented", vpi_get_str(vpiType,
       var_));
   endcase
