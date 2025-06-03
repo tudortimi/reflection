@@ -134,6 +134,7 @@ class rf_variable;
 
     vpiHandle member_it = vpi_iterate(vpiReg, var_);
     check_array_starts_at_index_0(var_);
+    check_array_is_of_type_string(var_);
     forever begin
       vpiHandle member = vpi_scan(member_it);
       if (member == null)
@@ -151,6 +152,14 @@ class rf_variable;
     vpiHandle left_range = vpi_handle(vpiLeftRange, array_handle);
     if (vpi_get_value_int(left_range) != 0)
         $fatal(0, "Only arrays starting at index '0' are supported.");
+  endfunction
+
+
+  local function void check_array_is_of_type_string(vpiHandle array_handle);
+    vpiHandle member_it = vpi_iterate(vpiReg, array_handle);
+    vpiHandle member = vpi_scan(member_it);
+    if (vpi_get_str(vpiType, member) != "vpiStringVar")
+        $fatal(0, "Only string arrays are currently supported.");
   endfunction
 
 endclass
