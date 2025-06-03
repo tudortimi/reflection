@@ -133,6 +133,7 @@ class rf_variable;
     rf_value #(string_arr) ret = new();
 
     vpiHandle member_it = vpi_iterate(vpiReg, var_);
+    check_array_starts_at_index_0(var_);
     forever begin
       vpiHandle member = vpi_scan(member_it);
       if (member == null)
@@ -143,6 +144,13 @@ class rf_variable;
 
     ret.set(the_array);
     return ret;
+  endfunction
+
+
+  local function void check_array_starts_at_index_0(vpiHandle array_handle);
+    vpiHandle left_range = vpi_handle(vpiLeftRange, array_handle);
+    if (vpi_get_value_int(left_range) != 0)
+        $fatal(0, "Only arrays starting at index '0' are supported.");
   endfunction
 
 endclass
