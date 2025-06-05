@@ -126,6 +126,48 @@ class rf_variable;
     vpi_put_value_string(var_, val.get());
   endfunction
 
+
+  local function rf_value_base get_value_array(vpiHandle var_);
+    check_array_starts_at_index_0(var_);
+    check_array_is_of_type_string(var_);
+
+    return get_value_string_array(var_);
+  endfunction
+
+
+  local function void check_array_starts_at_index_0(vpiHandle array_handle);
+    vpiHandle left_range = vpi_handle(vpiLeftRange, array_handle);
+    if (vpi_get_value_int(left_range) != 0)
+        $fatal(0, "Only arrays starting at index '0' are supported.");
+  endfunction
+
+
+  local function void check_array_is_of_type_string(vpiHandle array_handle);
+    vpiHandle member_it = vpi_iterate(vpiReg, array_handle);
+    vpiHandle member = vpi_scan(member_it);
+    if (vpi_get_str(vpiType, member) != "vpiStringVar")
+        $fatal(0, "Only string arrays are currently supported.");
+  endfunction
+
+
+  local function rf_value_base get_value_string_array(vpiHandle var_);
+    typedef string string_arr[];
+    string the_array[];
+    rf_value #(string_arr) ret = new();
+
+    vpiHandle member_it = vpi_iterate(vpiReg, var_);
+    forever begin
+      vpiHandle member = vpi_scan(member_it);
+      if (member == null)
+        break;
+
+      the_array = {the_array, vpi_get_value_string(member)};
+    end
+
+    ret.set(the_array);
+    return ret;
+  endfunction
+
 endclass
 
 
@@ -218,6 +260,7 @@ function rf_value_base rf_variable::get(rf_object_instance_base object = null);
   case (vpi_get_str(vpiType, var_))
     "vpiIntVar" : return get_value_int(var_);
     "vpiStringVar" : return get_value_string(var_);
+    "vpiRegArray" : return get_value_array(var_);
     default : $fatal(0, "Type '%s' not implemented", vpi_get_str(vpiType,
       var_));
   endcase
