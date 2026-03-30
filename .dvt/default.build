@@ -1,5 +1,5 @@
--incdir sv
-sv/reflection.sv
++dvt_init+xcelium.xrun
+-f build/full_xrun_args.f
 
 -incdir test/sv
 test/sv/some_package.sv
