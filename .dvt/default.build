@@ -1,6 +1,6 @@
 -incdir sv
 sv/reflection.sv
 
--incdir test
-test/some_package.sv
+-incdir test/sv
+test/sv/some_package.sv
 test/test.sv
